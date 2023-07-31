@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Call to Node.js Server</title>
+</head>
+<body>
+  <h1>Hello Node.js Server Response:</h1>
+  <div id="response"></div>
+  <button id="getHelloBtn">Get Hello NodeJS!!</button>
+
+  <script>
+    document.getElementById('getHelloBtn').addEventListener('click', function() {
+      makeAjaxCall();
+    });
+
+    function makeAjaxCall() {
+      const xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            document.getElementById('response').textContent = xhr.responseText;
+          } else {
+            document.getElementById('response').textContent = 'Error: Could not get response.';
+          }
+        }
+      };
+
+      xhr.open('GET', '/gethello', true);
+      xhr.send();
+    }
+  </script>
+</body>
+</html>

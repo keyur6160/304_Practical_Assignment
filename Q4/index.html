@@ -1,0 +1,41 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Chatbot</title>
+</head>
+<body>
+  const ws = new WebSocket('ws://localhost:3000');
+  <h1>WebSocket Chatbot</h1>
+  <div id="chatbox"></div>
+  <input type="text" id="message" placeholder="Type your message here">
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const messageInput = document.getElementById('message');
+    const ws = new WebSocket('ws://localhost:3000');
+
+    ws.onmessage = (event) => {
+      displayMessage(event.data);
+    };
+
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message !== '') {
+        displayMessage('You: ' + message);
+        ws.send(message);
+        messageInput.value = '';
+      }
+    }
+
+    function displayMessage(message) {
+      const p = document.createElement('p');
+      p.textContent = message;
+      chatbox.appendChild(p);
+    }
+  </script>
+</body>
+</html>
